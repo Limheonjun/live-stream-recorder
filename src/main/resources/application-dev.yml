@@ -1,0 +1,3 @@
+#logging:
+#  level:
+#    com.emgc.livestreamrecorder: DEBUG

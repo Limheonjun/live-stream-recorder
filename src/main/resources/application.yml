@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: live-stream-recorder
+  profiles:
+    group:
+      dev:
+        - dev
+      prod:
+        - prod
+    active: dev
+
+youtube:
+  google-api:
+    key: ${youtube-google-api-key}
