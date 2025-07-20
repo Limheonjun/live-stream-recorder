@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>채널 등록</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        .form-container h2 {
+            margin-bottom: 1.5rem;
+            color: #333;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.6rem;
+            border: 1px solid #ccc;
+            border-radius: 0.5rem;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #3f51b5;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #303f9f;
+        }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h2>채널 등록</h2>
+    <form th:action="@{/register}" method="post">
+        <div class="form-group">
+            <label for="channelName">채널 이름</label>
+            <input type="text" id="channelName" name="channelName" required>
+        </div>
+
+        <div class="form-group">
+            <label for="channelId">채널 ID</label>
+            <input type="text" id="channelId" name="channelId" required>
+        </div>
+
+        <div class="form-group">
+            <label for="type">채널 타입</label>
+            <select id="type" name="type" required>
+                <option th:each="type : ${channelTypes}" th:value="${type}" th:text="${type}"></option>
+            </select>
+        </div>
+
+        <button type="submit">등록</button>
+    </form>
+
+</div>
+</body>
+</html>

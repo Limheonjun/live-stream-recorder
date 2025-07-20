@@ -1,0 +1,36 @@
+<!-- resources/templates/channel-list.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Channel List</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body class="bg-gray-100 p-8">
+<div class="max-w-6xl mx-auto bg-white rounded shadow p-6">
+    <h1 class="text-2xl font-bold mb-4">Channel List</h1>
+    <table class="min-w-full table-auto border-collapse border border-gray-300">
+        <thead class="bg-gray-200">
+        <tr>
+            <th class="border px-4 py-2">ID</th>
+            <th class="border px-4 py-2">Name</th>
+            <th class="border px-4 py-2">Channel ID</th>
+            <th class="border px-4 py-2">Platform</th>
+            <th class="border px-4 py-2">Status</th>
+            <th class="border px-4 py-2">Deleted</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="channel : ${channelList}">
+            <td class="border px-4 py-2" th:text="${channel.id}">1</td>
+            <td class="border px-4 py-2" th:text="${channel.channelName}">Example Channel</td>
+            <td class="border px-4 py-2" th:text="${channel.channelId}">YouTube</td>
+            <td class="border px-4 py-2" th:text="${channel.type}">Platform</td>
+            <td class="border px-4 py-2" th:text="${channel.status}">Status</td>
+            <td class="border px-4 py-2" th:text="${channel.isDeleted}">Is Deleted</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
