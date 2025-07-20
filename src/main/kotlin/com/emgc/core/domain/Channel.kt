@@ -1,7 +1,6 @@
 package com.emgc.core.domain
 
 import com.emgc.livestreamrecorder.enums.ChannelType
-import com.emgc.livestreamrecorder.enums.RecordingStatus
 import jakarta.persistence.*
 
 @Entity
@@ -21,21 +20,9 @@ class Channel(
     @Enumerated(EnumType.STRING)
     val type: ChannelType,
 
-    @Column(name = "status")
-    @Enumerated(EnumType.STRING)
-    var status: RecordingStatus,
-
     @Column(name = "is_deleted")
     var isDeleted: Boolean = false
 ) {
-    fun record() {
-        this.status = RecordingStatus.RECORDING
-    }
-
-    fun idle() {
-        this.status = RecordingStatus.IDLE
-    }
-
     companion object {
         fun create(
             channelName: String,
@@ -47,7 +34,6 @@ class Channel(
                 channelName = channelName,
                 channelId = channelId,
                 type = type,
-                status = RecordingStatus.IDLE,
             )
         }
     }
