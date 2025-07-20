@@ -39,7 +39,7 @@ class YoutubeRecorder : StreamRecorder {
         YtDlp.MERGE_OUTPUT_FORMAT,
         "mp4",
         url
-    ).apply { log.info(this.get(4)) }
+    )
 
     private fun Process.consumeAndLog(): Int = apply {
         inputStream.bufferedReader().forEachLine {
