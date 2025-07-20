@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: live-stream-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: live-stream-recorder
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - "5432:5432"

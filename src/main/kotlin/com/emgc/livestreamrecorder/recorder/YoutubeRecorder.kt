@@ -8,7 +8,7 @@ import java.io.IOException
 import java.time.LocalDateTime
 
 @Component
-class YoutubeRecorder: StreamRecorder {
+class YoutubeRecorder : StreamRecorder {
     private val log = logger()
 
     override fun record(url: String, channelName: String) {
@@ -20,11 +20,13 @@ class YoutubeRecorder: StreamRecorder {
                 .start()
                 .consumeAndLog()
         } catch (e: IOException) {
+            log.error("Error while processing $url: $e")
             throw RuntimeException("Failed to start yt-dlp process", e)
         }
 
         if (exitCode != 0) {
-            throw RuntimeException("yt-dlp exited with code $exitCode")
+            log.debug("${channelName}은(는) 현재 라이브 방송중이 아닙니다.")
+            return
         }
     }
 
@@ -37,7 +39,7 @@ class YoutubeRecorder: StreamRecorder {
         YtDlp.MERGE_OUTPUT_FORMAT,
         "mp4",
         url
-    ).apply { log.info(this.get(4)) }
+    )
 
     private fun Process.consumeAndLog(): Int = apply {
         inputStream.bufferedReader().forEachLine {

@@ -1,5 +1,5 @@
 package com.emgc.livestreamrecorder.extractor
 
 interface StreamUrlExtractor {
-    fun extractUrl(channelId: String): String
+    fun extractUrl(channelName: String): String
 }
