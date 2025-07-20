@@ -1,4 +1,4 @@
-package com.emgc.livestreamrecorder
+package com.emgc
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
