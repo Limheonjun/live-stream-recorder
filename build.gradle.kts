@@ -29,9 +29,6 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 
-    // https://mvnrepository.com/artifact/com.google.apis/google-api-services-youtube
-    implementation("com.google.apis:google-api-services-youtube:v3-rev222-1.25.0")
-
     // JPA
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.postgresql:postgresql")
