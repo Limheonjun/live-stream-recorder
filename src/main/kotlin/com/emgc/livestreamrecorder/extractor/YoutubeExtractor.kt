@@ -28,7 +28,7 @@ class YoutubeExtractor(
 
             // 3. 최신 동영상의 라이브 상태 확인
             return if (isVideoLive(latestVideoId)) {
-                return "$YOUTUBE_BASE_URL$YOUTUBE_WATCH_PATH?$YOUTUBE_V_QUERY_STRING=$channelId"
+                return "$YOUTUBE_BASE_URL$YOUTUBE_WATCH_PATH?$YOUTUBE_V_QUERY_STRING=$latestVideoId"
             } else {
                 String.EMPTY
             }
