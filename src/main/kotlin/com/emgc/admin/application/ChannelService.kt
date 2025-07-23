@@ -4,7 +4,9 @@ import com.emgc.admin.application.response.ChannelResponse
 import com.emgc.admin.presentation.request.ChannelRegisterRequest
 import com.emgc.core.domain.Channel
 import com.emgc.core.domain.ChannelRepository
-import com.emgc.core.config.ChannelDetail
+import com.emgc.core.holder.ChannelDetail
+import com.emgc.core.holder.ChannelHolder
+import com.emgc.livestreamrecorder.enums.RecordingStatus
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -12,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 class ChannelService(
     private val channelRepository: ChannelRepository,
-    private val channelRecordingStatus: List<ChannelDetail>
+    private val channelHolder: ChannelHolder
 ) {
     fun getChannelList(): List<ChannelResponse> {
         val channels = channelRepository.findAll()
@@ -22,7 +24,7 @@ class ChannelService(
                 channelName = channel.channelName,
                 channelId = channel.channelId,
                 type = channel.type,
-                status = channelRecordingStatus.filter { it.channelId == channel.channelId }.first().recordingStatus,
+                status = channelHolder.data.first { it.channelId == channel.channelId }.recordingStatus,
                 isDeleted = channel.isDeleted
             )
         }
@@ -35,5 +37,10 @@ class ChannelService(
             type = request.type,
         )
         channelRepository.save(channel)
+        channelHolder.data.add(ChannelDetail(
+            channelId = request.channelId,
+            recordingStatus = RecordingStatus.IDLE,
+            channel = channel
+        ))
     }
 }
