@@ -1,27 +1,30 @@
-package com.emgc.core.config
+package com.emgc.core.holder
 
 import com.emgc.core.domain.Channel
 import com.emgc.core.domain.ChannelRepository
 import com.emgc.livestreamrecorder.enums.RecordingStatus
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.DependsOn
+import jakarta.annotation.PostConstruct
+import org.springframework.stereotype.Component
 
-@Configuration
-class ChannelConfig(
+@Component
+class ChannelHolder(
     private val channelRepository: ChannelRepository
 ) {
+    lateinit var data: MutableList<ChannelDetail>
 
-    @Bean
-    @DependsOn("entityManagerFactory")
-    fun channelRecordingStatus(): List<ChannelDetail> {
-        return channelRepository.findAll().map {
+    @PostConstruct
+    fun load() {
+        data = channelRepository.findAll().map {
             ChannelDetail(
                 channelId = it.channelId,
                 recordingStatus = RecordingStatus.IDLE,
                 channel = it
             )
-        }
+        }.toMutableList()
+    }
+
+    fun add(channelDetail: ChannelDetail) {
+        this.data.add(channelDetail)
     }
 }
 

@@ -1,7 +1,7 @@
 package com.emgc.livestreamrecorder.scheduler
 
 
-import com.emgc.core.config.ChannelDetail
+import com.emgc.core.holder.ChannelHolder
 import com.emgc.livestreamrecorder.enums.RecordingStatus
 import com.emgc.livestreamrecorder.extractor.StreamUrlExtractor
 import com.emgc.livestreamrecorder.recorder.StreamRecorder
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class LiveStreamScheduler(
-    private val channelDetails: List<ChannelDetail>,
+    private val channelHolder: ChannelHolder,
     private val streamUrlExtractor: StreamUrlExtractor,
     private val streamRecorder: StreamRecorder,
     private val ioCoroutineScope: CoroutineScope,
@@ -22,7 +22,7 @@ class LiveStreamScheduler(
 
     @Scheduled(cron = "0 */5 * * * *")
     fun record() {
-        for (channelDetail in channelDetails) {
+        for (channelDetail in channelHolder.data) {
             if (channelDetail.recordingStatus == RecordingStatus.RECORDING) {
                 continue
             }
