@@ -6,6 +6,7 @@ plugins {
     kotlin("jvm") version "1.9.25"
     kotlin("plugin.spring") version "1.9.25"
     kotlin("plugin.jpa") version "1.9.25"
+    id("com.google.cloud.tools.jib") version "3.4.0"
     id("org.springframework.boot") version "3.5.3"
     id("io.spring.dependency-management") version "1.1.7"
 }
@@ -68,4 +69,39 @@ tasks.withType<Jar> {
 
 tasks.withType<BootJar> {
     enabled = true
+    archiveFileName.set("app.jar")
+}
+
+tasks.named("build") {
+    dependsOn("clean")
+    mustRunAfter("clean")
+}
+
+tasks.named("jib") {
+    dependsOn("build")
+}
+
+jib {
+    from {
+        image = "openjdk:17.0.2-slim"
+    }
+    to {
+        image = "${System.getProperty("registry.url")}/live-stream-recorder"
+        tags = setOf("${project.version}", "latest")
+        setAllowInsecureRegistries(true)
+    }
+    container {
+        jvmFlags = listOf(
+            "-Dfile.encoding=UTF-8",
+            "-Dspring.profiles.active=prod",
+            "-XX:InitialRAMPercentage=50.0",
+            "-XX:MaxRAMPercentage=80.0",
+            "-XX:+UseG1GC",
+            "-XX:+HeapDumpOnOutOfMemoryError",
+            "-XX:HeapDumpPath=/tmp",
+            "-XX:+ExitOnOutOfMemoryError",
+            "-Xlog:gc*:file=/tmp/gc.log:time,uptime,level,tags"
+        )
+        ports = listOf("8080")
+    }
 }
