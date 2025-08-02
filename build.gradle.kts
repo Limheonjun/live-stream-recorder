@@ -83,7 +83,7 @@ tasks.named("jib") {
 
 jib {
     from {
-        image = "openjdk:17.0.2-slim"
+        image = "${System.getProperty("registry.url")}/live-stream-recorder-base-image"
     }
     to {
         image = "${System.getProperty("registry.url")}/live-stream-recorder"
